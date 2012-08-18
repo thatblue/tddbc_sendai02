@@ -50,5 +50,12 @@ public class VendingMachineTest {
         }
     }
     
+    @Test
+    public void ジュースの情報が取得出来る() throws Exception {
+        assertThat(vendingMachine.getJuiceName(), is("コーラ"));
+        assertThat(vendingMachine.getJuicePrice(), is(120));
+        assertThat(vendingMachine.getJuiceStockCount(), is(5));
+        
+    }
     
 }

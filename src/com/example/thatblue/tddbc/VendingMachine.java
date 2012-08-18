@@ -11,6 +11,8 @@ public class VendingMachine {
     
     private Set<Integer> enableCoins = new HashSet<Integer>();
     
+    private StockOfJuice stockOfJuice = new StockOfJuice();
+    
     public VendingMachine() {
         enableCoins.add(10);
         enableCoins.add(50);
@@ -43,4 +45,17 @@ public class VendingMachine {
     private boolean isEnableCoin(int money){
         return enableCoins.contains(money);
     }
+
+    public String getJuiceName() {
+        return stockOfJuice.getName();
+    }
+
+    public Integer getJuicePrice() {
+        return stockOfJuice.getPrice();
+    }
+
+    public Integer getJuiceStockCount() {
+        return stockOfJuice.getStockCount();
+    }
+
 }
