@@ -10,19 +10,19 @@ import java.util.List;
  * @author thatblue
  */
 public class VendingMachine {
-    
+
     /** 投入金額 */
     private List<Integer> insertedCoins = new ArrayList<Integer>();
-    
+
     /** 投入可能なコイン/お札 */
     private static List<Integer> enableCoins = Arrays.asList(1000, 500, 100, 50, 10);
 
     /** ジュースの在庫 */
     private StockOfJuice stockOfJuice = new StockOfJuice();
-    
+
     /** 売り上げ金額 */
     private int saleProceeds = 0;
-    
+
     /**
      * 投入金額の合計を取得します
      * 
@@ -30,7 +30,7 @@ public class VendingMachine {
      */
     public int getTotalAmount() {
         int totalAmount = 0;
-        for(Integer coin:insertedCoins) {
+        for (Integer coin : insertedCoins) {
             totalAmount += coin;
         }
         return totalAmount;
@@ -38,10 +38,12 @@ public class VendingMachine {
 
     /**
      * お金を投入します
-     * @param money 投入金額
+     * 
+     * @param money
+     *            投入金額
      */
     public void insert(int money) {
-        if(!isEnableCoin(money)){
+        if (!isEnableCoin(money)) {
             throw new IllegalArgumentException("invalid money!");
         }
         insertedCoins.add(money);
@@ -57,14 +59,15 @@ public class VendingMachine {
         insertedCoins = new ArrayList<Integer>();
         return refundCoins;
     }
-    
+
     /**
      * 利用可能なコイン/お札かどうかを判断します
      * 
-     * @param money 確認したいコイン/お札の金額
+     * @param money
+     *            確認したいコイン/お札の金額
      * @return true:利用可能 false:利用不可
      */
-    private static boolean isEnableCoin(int money){
+    private static boolean isEnableCoin(int money) {
         return enableCoins.contains(money);
     }
 
@@ -117,44 +120,44 @@ public class VendingMachine {
      * ジュースを購入します
      */
     public void purchase() {
-        if(!this.enableToBuy()){
+        if (!this.enableToBuy()) {
             return;
         }
-        
+
         // 売り上げを増やす
         this.saleProceeds += this.getJuicePrice();
-        
+
         // 在庫を減らす
         this.stockOfJuice.decrementStock();
-        
+
         // 投入したお金から差し引くために、除去するコインの枚数と除去後に戻す必要のある金額(ex:150円投入して120円のものを買った後の30円)を計算する
         int priceOfremainder = 0;
         int countOfRemoveCoins = 0;
-        for(Integer coin: this.insertedCoins){
+        for (Integer coin : this.insertedCoins) {
             countOfRemoveCoins++;
             priceOfremainder += coin;
-            if(priceOfremainder >= this.getJuicePrice()){
+            if (priceOfremainder >= this.getJuicePrice()) {
                 break;
             }
         }
         // 戻す必要のある金額
         priceOfremainder -= this.getJuicePrice();
-        
+
         // 売り上げ金額を下回る枚数までコインを削除する
-        for(int i = 0; i < countOfRemoveCoins; i++){
-            insertedCoins.remove(0); 
+        for (int i = 0; i < countOfRemoveCoins; i++) {
+            insertedCoins.remove(0);
         }
-        
+
         // ちょうど差し引くことが出来ればこのまま処理終了
-        if(priceOfremainder == 0){
+        if (priceOfremainder == 0) {
             return;
         }
-        
+
         // 売り上げ金額より多く差し引いた分を戻す
-        for(int coin: enableCoins){
+        for (int coin : enableCoins) {
             int countOfCoinsToReturn = priceOfremainder / coin;
-            if(countOfCoinsToReturn > 0) {
-                for(int i = 0; i < countOfCoinsToReturn; i++){
+            if (countOfCoinsToReturn > 0) {
+                for (int i = 0; i < countOfCoinsToReturn; i++) {
                     insert(coin);
                     priceOfremainder -= coin;
                 }

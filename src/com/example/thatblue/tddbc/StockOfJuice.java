@@ -9,13 +9,13 @@ public class StockOfJuice {
 
     /** ジュースの名称 */
     private String name;
-    
+
     /** 金額 */
     private int price;
-    
+
     /** 在庫数 */
     private int stockCount;
-    
+
     /** デフォルトコンストラクタ */
     public StockOfJuice() {
         this.name = "コーラ";
@@ -49,7 +49,7 @@ public class StockOfJuice {
     public int getStockCount() {
         return this.stockCount;
     }
-    
+
     /**
      * 在庫を1つ減らします
      */
